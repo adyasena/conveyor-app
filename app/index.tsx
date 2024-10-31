@@ -14,12 +14,12 @@ const App: React.FC = () => {
   };
 
   return (
-    <View className="flex pt-12 px-8 bg-gray-100 min-h-screen w-full">
-      <Text className="text-center text-2xl font-bold">Aplikasi D11</Text>
+    <View className="flex pt-12 px-8 bg-white min-h-screen w-full">
+      <Text className="text-center text-2xl font-bold py-6">Aplikasi D11</Text>
       <MapComponent />
       <View className="flex-row justify-between gap-4 mt-4">
         <Pressable
-          className="flex-1 flex-row p-2 bg-white items-center rounded-lg"
+          className="flex-1 flex-row p-2 bg-white items-center rounded-xl shadow"
           onPress={() => goToDetail("1")}
         >
           <Image
@@ -32,7 +32,7 @@ const App: React.FC = () => {
           </View>
         </Pressable>
         <Pressable
-          className="flex-1 flex-row p-2 bg-white items-center rounded-lg "
+          className="flex-1 flex-row p-2 bg-white items-center rounded-xl shadow"
           onPress={() => goToDetail("2")}
         >
           <Image
