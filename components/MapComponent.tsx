@@ -1,15 +1,14 @@
-// components/MapComponent.tsx
 import React, { useEffect, useState } from "react";
 import { Text, View, Alert, Dimensions } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 
 const MapComponent: React.FC = () => {
-  const [mLat, setMLat] = useState<number | null>(null); // Latitude position
-  const [mLong, setMLong] = useState<number | null>(null); // Longitude position
+  const [mLat, setMLat] = useState<number | null>(null);
+  const [mLong, setMLong] = useState<number | null>(null);
   const [locationPermissionGranted, setLocationPermissionGranted] =
     useState(false);
-  const [loading, setLoading] = useState(true); // State untuk menandakan loading
+  const [loading, setLoading] = useState(true);
 
   // Koordinat default Yogyakarta
   const DEFAULT_LOCATION = {
@@ -23,9 +22,9 @@ const MapComponent: React.FC = () => {
     const initializeLocation = async () => {
       await requestLocationPermission();
       if (locationPermissionGranted) {
-        await getLocation(); // Get the current location when the app starts
+        await getLocation();
       } else {
-        setLoading(false); // Set loading false jika izin tidak diberikan
+        setLoading(false);
       }
     };
 
@@ -34,10 +33,10 @@ const MapComponent: React.FC = () => {
 
   const requestLocationPermission = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
-    console.log("Location permission status:", status); // Log status izin
+    console.log("Location permission status:", status);
     if (status !== "granted") {
       Alert.alert("Permission to access location was denied");
-      setLoading(false); // Set loading false jika izin tidak diberikan
+      setLoading(false);
     } else {
       setLocationPermissionGranted(true);
       console.log("You can use the location");
@@ -47,8 +46,8 @@ const MapComponent: React.FC = () => {
   const getLocation = async () => {
     if (!locationPermissionGranted) {
       Alert.alert("Location permission is not granted.");
-      setLoading(false); // Set loading false jika izin tidak diberikan
-      return; // Exit if permission is not granted
+      setLoading(false);
+      return;
     }
 
     try {
@@ -62,7 +61,7 @@ const MapComponent: React.FC = () => {
       console.error(error);
       Alert.alert("Failed to get location");
     } finally {
-      setLoading(false); // Set loading false setelah mencoba mendapatkan lokasi
+      setLoading(false);
     }
   };
 
@@ -74,18 +73,19 @@ const MapComponent: React.FC = () => {
   };
 
   return (
-    <View style={{ alignItems: "center", marginTop: 20 }}>
-      {loading ? ( // Menampilkan teks loading jika masih memuat
+    <View style={{ alignItems: "center"}} className="mt-5">
+      {loading ? (
         <Text>Loading map...</Text>
       ) : (
+        <View style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 12, overflow: 'hidden' }}>
         <MapView
         style={{
-          width: screenWidth * 0.85, // Set lebar peta menjadi 80% dari lebar layar
-          height: screenWidth * 0.85, // Set tinggi peta agar tetap persegi
+          width: screenWidth * 0.86,
+          height: screenWidth * 0.86,
         }}
-          initialRegion={mapRegion} // Menggunakan region yang ditentukan
-          showsUserLocation={true} // Menampilkan lokasi pengguna di peta
-          region={mapRegion} // Set region peta agar dapat diperbarui
+          initialRegion={mapRegion}
+          showsUserLocation={true}
+          region={mapRegion}
         >
           <Marker
             coordinate={{
@@ -94,6 +94,8 @@ const MapComponent: React.FC = () => {
             }}
           />
         </MapView>
+
+        </View>
       )}
     </View>
   );
