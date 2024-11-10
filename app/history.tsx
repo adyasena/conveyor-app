@@ -1,20 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, FlatList } from "react-native";
+import { ref, get } from "firebase/database";
+import { database } from "@/firebaseConfig";
+
+type HistoryItem = {
+  id: string;
+  volume: string;
+  time: string;
+};
 
 const HistoryPage: React.FC = () => {
-  const historyData = [
-    { id: "1", volume: "30%", time: "2024-11-01 10:00" },
-    { id: "2", volume: "45%", time: "2024-11-02 14:30" },
-    { id: "3", volume: "60%", time: "2024-11-03 18:00" },
-  ];
-  const sortedHistoryData = historyData.sort(
-    (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
-  );
+  const [historyData, setHistoryData] = useState<HistoryItem[]>([]);
+
+  const fetchHistoryData = async () => {
+    try {
+      const historyRef = ref(database, `id/1/history`);
+      const snapshot = await get(historyRef);
+      
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        
+        const formattedData = Object.entries(data).map(([timestamp, volume]) => ({
+          id: timestamp,
+          volume: `${volume}%`,
+          time: new Date(parseInt(timestamp) * 1000)
+            .toISOString()
+            .replace("T", " ")
+            .slice(0, 16),
+        }));
+
+        const sortedData = formattedData.sort(
+          (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
+        );
+
+        setHistoryData(sortedData);
+      } else {
+        console.log("Data riwayat tidak ditemukan");
+      }
+    } catch (error) {
+      console.error("Error mengambil data riwayat dari Firebase:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchHistoryData();
+  }, []);
 
   return (
     <View className="flex-1 bg-white pt-4 px-8">
       <FlatList
-        data={sortedHistoryData}
+        data={historyData}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View className="flex-row justify-between p-4 border-b border-gray-300">

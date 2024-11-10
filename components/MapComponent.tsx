@@ -6,14 +6,13 @@ import * as Location from "expo-location";
 const MapComponent: React.FC = () => {
   const [mLat, setMLat] = useState<number | null>(null);
   const [mLong, setMLong] = useState<number | null>(null);
-  const [locationPermissionGranted, setLocationPermissionGranted] =
-    useState(false);
+  const [locationPermissionGranted, setLocationPermissionGranted] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Koordinat default Yogyakarta
+  // Koordinat SGLC UGM
   const DEFAULT_LOCATION = {
-    latitude: -7.7956,
-    longitude: 110.3695,
+    latitude: -7.7653606,
+    longitude: 110.3723441,
   };
 
   const screenWidth = Dimensions.get("window").width;
@@ -73,28 +72,27 @@ const MapComponent: React.FC = () => {
   };
 
   return (
-    <View style={{ alignItems: "center"}} className="mt-5">
+    <View style={{ alignItems: "center" }} className="mt-5">
       {loading ? (
         <Text>Loading map...</Text>
       ) : (
         <View style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 12, overflow: 'hidden' }}>
-        <MapView
-        style={{
-          width: screenWidth * 0.86,
-          height: screenWidth * 0.86,
-        }}
-          initialRegion={mapRegion}
-          showsUserLocation={true}
-          region={mapRegion}
-        >
-          <Marker
-            coordinate={{
-              latitude: mLat !== null ? mLat : DEFAULT_LOCATION.latitude,
-              longitude: mLong !== null ? mLong : DEFAULT_LOCATION.longitude,
+          <MapView
+            style={{
+              width: screenWidth * 0.86,
+              height: screenWidth * 0.86,
             }}
-          />
-        </MapView>
-
+            initialRegion={mapRegion}
+            showsUserLocation={true}
+            region={mapRegion}
+          >
+            <Marker
+              coordinate={{
+                latitude: DEFAULT_LOCATION.latitude,
+                longitude: DEFAULT_LOCATION.longitude,
+              }}
+            />
+          </MapView>
         </View>
       )}
     </View>
