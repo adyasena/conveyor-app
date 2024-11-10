@@ -1,12 +1,21 @@
-import { Stack } from "expo-router";
+import React from 'react';
+import { View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { Stack } from 'expo-router';
 import "../global.css";
 
-export default function RootLayout() {
+const RootLayout = () => {
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }}/>
-      <Stack.Screen name="detail" options={{ title: "Detail Konveyor" }}/>
-      <Stack.Screen name="history" options={{ title: "Riwayat Volume Sampah" }}/>
-    </Stack>
+    <View style={{ flex: 1 }}>
+      <StatusBar style="dark" backgroundColor="#ffffff" />
+      
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="detail" options={{ title: 'Detail Konveyor' }} />
+        <Stack.Screen name="history" options={{ title: 'Riwayat Volume Sampah' }} />
+      </Stack>
+    </View>
   );
-}
+};
+
+export default RootLayout;

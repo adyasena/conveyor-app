@@ -19,16 +19,16 @@ const App: React.FC = () => {
       <MapComponent />
       <View className="gap-4 mt-4">
         <Pressable
-          className="flex flex-row p-2 bg-white items-center rounded-xl shadow"
+          className="flex flex-row p-2 bg-white items-center rounded-xl shadow shadow-black"
           onPress={() => goToDetail("1")}
         >
           <Image
-            source={require("@/assets/images/react-logo.png")}
+            source={require("@/assets/images/logo.png")}
             className="w-14 h-14 mr-2"
           />
           <View className="flex-1 flex-col">
             <Text className="truncate">Konveyor 1</Text>
-            <Text className="truncate">Lokasi Konveyor 1</Text>
+            <Text className="truncate">SGLC, Fakultas Teknik, Universitas Gadjah Mada</Text>
           </View>
         </Pressable>
       </View>
